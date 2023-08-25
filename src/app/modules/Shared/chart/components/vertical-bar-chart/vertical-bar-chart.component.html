@@ -1,0 +1,22 @@
+
+<ngx-charts-bar-vertical
+  [view]="view"
+  [results]="chartData"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (activate)="onBarActivate($event)"
+  (deactivate)="onBarDeactivate()"
+  (select)="onSelect($event)"
+>
+</ngx-charts-bar-vertical>
+
+
+<!--
+    (select)="onSelect($event)">
+      
+-->

@@ -1,0 +1,20 @@
+<div *ngIf="data; else placeholder">
+  <mat-card>
+    <mat-card-header>
+      {{data.name}}
+    </mat-card-header>
+      <mat-card-content>
+        <ul *ngFor="let income of data.series">
+          <li>{{income.name}}: {{income.value}}</li>
+        </ul>
+      </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #placeholder>
+  <mat-card>
+    <mat-card-content>
+      Placeholder
+    </mat-card-content>
+  </mat-card>
+</ng-template>

@@ -1,0 +1,13 @@
+.container {
+    display: flex; /* Użyj flexboxa do kontroli układu */
+    align-items: flex-start; /* Wyśrodkuj komponenty wzdłuż osi pionowej */
+  }
+  
+  .app-vertical-bar-chart {
+    flex: 1; /* Rozciągnij na całą dostępną szerokość */
+    margin-right: 20px; /* Dodaj odstęp między wykresem a podglądem */
+  }
+  
+  .app-preview {
+    flex: 0.5; /* Ustaw szerokość podglądu na połowę dostępnego miejsca */
+  }

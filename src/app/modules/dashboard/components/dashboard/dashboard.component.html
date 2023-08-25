@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+    <span>Nav Bar</span>
+     <a mat-button routerLink="income">Income</a>
+     <a mat-button routerLink="outcome">Outcome</a>
+</mat-toolbar>
+
+
+<div *ngIf="isLoading; else content">
+    <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+    <!--
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
+    -->
+    
+</div>
+  
+  <ng-template #content>
+    <router-outlet></router-outlet>
+  </ng-template>
