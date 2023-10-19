@@ -1,8 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { single } from 'rxjs';
+import { Config } from 'src/app/config';
 import { incomesData } from 'src/app/data/income';
 import { ChartData } from 'src/app/data/types';
+import { CONFIG_CHART_TOKEN } from 'src/app/tokens/config.token';
+import { getSingleChartDataByMonth } from '../../helpers/transform';
+import { SingleChartData } from 'src/app/modules/outcome/types/outcome.types';
 
 @Component({
   selector: 'app-vertical-bar-chart',
@@ -11,24 +15,19 @@ import { ChartData } from 'src/app/data/types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VerticalBarChartComponent {
-
-  @Output() private monthHovered = new EventEmitter<string>();
-  @Output() private monthSelected = new EventEmitter<string>();
-
-  @Input() set data (value: ChartData[]) {
-    this.chartData = value;
+  @Output() monthHovered = new EventEmitter<string>();
+  @Output() monthSelected = new EventEmitter<string>();
+  @Input() set data (value: ChartData[] | null) {
+    this.chartData = value ? value : [];
   }
+
+  constructor(@Inject(CONFIG_CHART_TOKEN) protected config: Config){}
 
   // options
   protected view: [number,number] = [700, 400];
   protected chartData!: any[];
-  protected showXAxis = true;
-  protected showYAxis = true;
-  protected showLegend = true;
-  protected showXAxisLabel = true;
-  protected showYAxisLabel = true;
-  protected xAxisLabel = 'Priority';
-  protected yAxisLabel = 'Percentage%';
+  // TODO: konfiga ustawia parent CONFIG => DI przekazuje config'a
+
 
 
   onBarActivate(event: any) {

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { IncomeData, OutcomeData } from 'src/app/data/types';
 import { transformDataForChartOutcome, transformDataForSingleChartOutcome } from '../helpers/transform';
 import { outcomesData } from 'src/app/data/outcome';
-import { SpendingData } from '../types/outcome.types';
+import { OutcomeToAddData, SingleChartData, SpendingData } from '../types/outcome.types';
 import { incomesData } from 'src/app/data/income';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackBarComponent } from 'src/app/components/custom-snack-bar/custom-snack-bar.component';
 
@@ -18,27 +18,26 @@ export class OutcomeDataService {
 
   constructor(private snackBar: MatSnackBar){}
 
-  getSingleChartData(month: string) {
-    const singleCharData = transformDataForSingleChartOutcome(this.data.getValue());
-    const monthData = singleCharData.find((data)=> data.name === month)
-
-    if(!monthData){
-      return;
-    }
-    return monthData;
-  }
-
-
-  addToOutcome(data: SpendingData, month: string){
+  addToOutcome({data, month}: OutcomeToAddData): Observable<boolean>{
     const outcomesData = this.data.getValue()
+    const outcomesDataCopy = outcomesData.map(obj => ({ ...obj }));
     const selectedMonthIndex = outcomesData.findIndex(expenseObj => Object.keys(expenseObj)[0] === month);
 
     if(selectedMonthIndex === -1){
       CustomSnackBarComponent.openErrorSnackBar(this.snackBar, 'Bad request', 'Close');
-      return;
+      throw new Error('Bad request!');
     }
-      // Dodaj nowy wydatek do istniejącego miesiąca
-    outcomesData[selectedMonthIndex][month][data.name] = data.value;
-    this.data.next(outcomesData);
+
+      outcomesDataCopy[selectedMonthIndex] = {
+        ...outcomesDataCopy[selectedMonthIndex],
+        [month]: {
+          ...outcomesDataCopy[selectedMonthIndex][month],
+          [data.name]: data.value
+        }
+      };
+
+    outcomesDataCopy[selectedMonthIndex][month][data.name] = data.value;
+    this.data.next(outcomesDataCopy);
+    return of(true);
   }
 }

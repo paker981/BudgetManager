@@ -8,8 +8,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './components/form/form.component';
 import { AddComponent } from './components/add/add.component';
 import { OutcomeRoutingModule } from './outcome-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './store/reducers';
+import { OutcomeEffects } from './store/effects';
+import { OutcomeDataService } from './services/outcome-data.service';
 
-
+const OUTCOME_MODULE_KEY = 'outcomes';
 
 @NgModule({
   declarations: [
@@ -19,11 +24,16 @@ import { OutcomeRoutingModule } from './outcome-routing.module';
     AddComponent
   ],
   imports: [
+    StoreModule.forFeature(OUTCOME_MODULE_KEY, reducers),
+    EffectsModule.forFeature([OutcomeEffects]),
     CommonModule,
     ChartModule,
     MaterialModule,
     ReactiveFormsModule,
     OutcomeRoutingModule
+  ],
+  providers: [
+    OutcomeDataService
   ]
 })
 export class OutcomeModule { }

@@ -1,5 +1,15 @@
-<app-vertical-bar-chart [data]="data" (monthSelected)="onSelectedMonth($event)"></app-vertical-bar-chart>
 
-<button mat-raised-button routerLink="add">Add Expense</button>
+<div *ngIf="isLoading$ | async; else contentDiv" class="loader"></div>
 
-<router-outlet></router-outlet>
+<ng-template #contentDiv >
+    <div class="container">
+        <app-vertical-bar-chart [data]="data$ | async" (monthSelected)="onSelectedMonth($event)"></app-vertical-bar-chart>
+        <button mat-raised-button (click)="addMode = !addMode">Add Expense</button>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="addMode">
+    <app-add [data]="singleChartData$ | async" (spentAdded)="onSpentAdd($event)"></app-add>
+</ng-container>
+
+<!-- <router-outlet></router-outlet> -->

@@ -14,3 +14,8 @@ export interface SpendingData {
     name: string;
     series: { name: string; value: number }[];
   }
+
+export interface OutcomeToAddData {
+  data: SpendingData,
+  month: string
+}

@@ -13,7 +13,7 @@ export class FormComponent {
 
   protected form: FormGroup<SpendingForm>;
 
-  @Output() private formSubmitted: EventEmitter<SpendingData> = new EventEmitter<SpendingData>();
+  @Output() formSubmitted: EventEmitter<SpendingData> = new EventEmitter<SpendingData>();
 
   constructor(private snackBar: MatSnackBar){
     this.form = new FormGroup<SpendingForm>({
@@ -29,5 +29,6 @@ export class FormComponent {
     }
 
     this.formSubmitted.emit(this.form.value as SpendingData);
+    this.form.reset();
   }
 }

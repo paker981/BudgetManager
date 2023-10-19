@@ -12,6 +12,7 @@ export function transformDataForChartOutcome(outcomeData: OutcomeData[]): ChartD
       const outcomes = monthData[month]
       let summary = 0;
   
+      
       Object.keys(outcomes).forEach(key => {
         summary += outcomes[key]
       })
@@ -50,16 +51,6 @@ export function transformDataForChartOutcome(outcomeData: OutcomeData[]): ChartD
     return transformedData;
   }
 
-  export function transformDataForMonthList(outcomeData: OutcomeData[]): string[]  {
-    const transformedData: string[] = [];
-  
-      outcomeData.forEach(monthData => {
-        const month = Object.keys(monthData)[0];
-        transformedData.push(month)
-      })
-    return transformedData;
-  }
-
   export function transformForMonthList(data: SingleChartData[]): string[] {
     const transformedData: string[] = [];
 
@@ -68,4 +59,14 @@ export function transformDataForChartOutcome(outcomeData: OutcomeData[]): ChartD
       transformedData.push(month);
     })
     return transformedData
+  }
+
+  export function outcomeCallback(data: OutcomeData, month: string): number{
+    const outcomes = data[month]
+    let summary = 0
+
+    Object.keys(outcomes).forEach(key => {
+      summary += outcomes[key]
+    })
+    return summary
   }

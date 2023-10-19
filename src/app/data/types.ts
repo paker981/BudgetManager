@@ -27,3 +27,5 @@ export interface ChartData {
     name: string; 
     value: number;
   }
+
+  export type TransformChartDataCallback = (data: any, month: string) => number;  

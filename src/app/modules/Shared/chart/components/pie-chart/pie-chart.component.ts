@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
+import { Config } from 'src/app/config';
 import { incomesData } from 'src/app/data/income';
 import { ChartData } from 'src/app/data/types';
+import { CONFIG_CHART_TOKEN } from 'src/app/tokens/config.token';
 
 @Component({
   selector: 'app-pie-chart',
@@ -10,19 +12,13 @@ import { ChartData } from 'src/app/data/types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PieChartComponent {
-  @Input() set data (value: ChartData[]) {
-    console.log(value)
-    this.chartData = value;
+  @Input() set data (value: ChartData[] | null) {
+    this.chartData = value ? value : [];
   }
+
+  constructor(@Inject(CONFIG_CHART_TOKEN) protected config: Config){}
 
   // options
   protected view: [number,number] = [700, 400];
   protected chartData!: any[];
-  protected showXAxis = true;
-  protected showYAxis = true;
-  protected showLegend = true;
-  protected showXAxisLabel = true;
-  protected showYAxisLabel = true;
-  protected xAxisLabel = 'Priority';
-  protected yAxisLabel = 'Percentage%';
 }

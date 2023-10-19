@@ -1,7 +1,12 @@
-<div class="container">
-    <app-vertical-bar-chart [data]="data" (monthHovered)="onMonthHovered($event)"></app-vertical-bar-chart>
-    <app-preview [data]="selectedMonth"></app-preview>
-</div>
+<div *ngIf="isLoading$ | async; else contentDiv" class="loader"></div>
+
+
+<ng-template #contentDiv >
+    <div class="container">
+        <app-vertical-bar-chart [data]="data$ | async" (monthHovered)="onMonthHovered($event)"></app-vertical-bar-chart>
+        <app-preview [data]="selectedMonth"></app-preview>
+    </div>
+</ng-template>
 
 
 

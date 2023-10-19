@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartData, IncomeCategory, IncomeData, OutcomeData } from 'src/app/data/types';
 import { IncomeDataService } from '../../services/income-data.service';
-import { transformDataForChart } from '../../helpers/transform';
-import { map } from 'rxjs';
+import { Observable, delay, map, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PreviewData } from '../../types/incomeData.types';
+import { PreviewComponent } from '../preview/preview.component';
+import { transformDataForChart } from 'src/app/modules/Shared/chart/helpers/transform';
+import { incomeCallback } from '../../helpers/transform';
+import { AppState } from 'src/app/interfaces/appState.interface';
+import { Store, select } from '@ngrx/store';
+import { selector } from 'd3-selection';
+import { incomesSelector, isLoadingSelector } from '../../store/selectors';
+import { getIncomes } from '../../store/actions';
+import * as IncomesActions from '../../store/actions';
+import { IncomeState } from 'src/app/interfaces/incomeState.inteface';
+
 
 @UntilDestroy()
 @Component({
@@ -12,16 +22,20 @@ import { PreviewData } from '../../types/incomeData.types';
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss']
 })
-export class ContainerComponent {
-
+export class ContainerComponent implements OnInit {
   protected selectedMonth!: PreviewData | null;
-  protected data!: ChartData[] 
+  protected isLoading$: Observable<boolean> = this.store.pipe(select(isLoadingSelector))
+  protected data$: Observable<ChartData[]> = this.store.pipe(
+    select(incomesSelector),
+    map((val=>transformDataForChart(val,incomeCallback))),
+  )
 
-  constructor(private incomeDataService: IncomeDataService){
-    this.incomeDataService.data$.pipe(
-      map(transformDataForChart),
-      untilDestroyed(this),
-    ).subscribe(val=>this.data=val)
+  constructor(private incomeDataService: IncomeDataService, private store: Store<IncomeState>){
+
+  }
+  ngOnInit(): void {
+    // this.store
+    this.store.dispatch(IncomesActions.getIncomes())
   }
 
   onMonthHovered(month: string){
@@ -30,6 +44,8 @@ export class ContainerComponent {
       return;
     }
 
+    // this.previewComponent.data = 
+    // this.previewComponent.displayPreview(data) = 
     const monthSummary = this.incomeDataService.getPreparedToPreview(month);
     this.selectedMonth = monthSummary ? monthSummary : null
   }

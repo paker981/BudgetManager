@@ -7,12 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: ContainerComponent,
-    children: [
-      {
-        path: 'add',
-        component: AddComponent, 
-      },
-    ]
   }
   ];
   

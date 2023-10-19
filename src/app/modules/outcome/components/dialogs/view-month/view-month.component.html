@@ -8,7 +8,7 @@
             mat-raised-button (click)="showAddForm = !showAddForm">
             Add another spending!
         </button>
-        </div>
+    </div>
         <div *ngIf="showAddForm">
             <app-form (formSubmitted)="onAdd($event)"></app-form>
         </div>

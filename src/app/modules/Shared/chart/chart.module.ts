@@ -15,8 +15,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   imports: [
     CommonModule,
     NgxChartsModule
-
-    
   ],
   exports: [
     VerticalBarChartComponent,

@@ -4,17 +4,25 @@
      <a mat-button routerLink="outcome">Outcome</a>
 </mat-toolbar>
 
+<router-outlet></router-outlet>
 
+<!--
 <div *ngIf="isLoading; else content">
     <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
-    <!--
-      <div class="loader-container">
-        <div class="loader"></div>
-      </div>
-    -->
-    
+
+
 </div>
   
-  <ng-template #content>
-    <router-outlet></router-outlet>
-  </ng-template>
+<ng-template #content>
+  <ng-content></ng-content>
+    <router-outlet></router-outlet> 
+</ng-template>
+
+-->
+
+<!-- network i select => No throttling => slow 3g -->
+<!-- wbija na url -->
+<!-- wbijasz na index.html -->
+<!-- js'owe -->
+<!-- renderowanie -->
+
