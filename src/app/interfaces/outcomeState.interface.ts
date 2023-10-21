@@ -2,6 +2,6 @@ import { OutcomeData } from "../data/types";
 
 export interface OutcomeState {
     isLoading: boolean;
-    outcomes: OutcomeData[]
+    entities: { [id: string]: OutcomeData }
     error: string | null
 }

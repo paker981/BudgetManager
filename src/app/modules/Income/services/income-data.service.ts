@@ -12,15 +12,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 @Injectable()
 export class IncomeDataService {
   private _data = new BehaviorSubject<IncomeData[]>(incomesData);
-  data$: Observable<IncomeData[]> = this._data.asObservable().pipe(delay(2000));
+  data$: Observable<IncomeData[]> = this._data.asObservable().pipe();
 
-  getPreparedToPreview(month: string) {
-    const data = transformDataToPreview(this._data.getValue())
-    const monthData = data.find((data)=> data.name === month)
-
-    if(!monthData){
-      return;
-    }
-    return monthData;
+  changeData() {
+    // this_data.next()
   }
 }

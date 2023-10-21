@@ -11,7 +11,7 @@ export enum OutcomeCategory {
 }
 
 
-export interface IncomeData {
+export type IncomeData = {
     [month: string]: {
         incomes: Array<{ [category in IncomeCategory]?: number }>;
     };

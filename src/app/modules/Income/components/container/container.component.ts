@@ -6,7 +6,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PreviewData } from '../../types/incomeData.types';
 import { PreviewComponent } from '../preview/preview.component';
 import { transformDataForChart } from 'src/app/modules/Shared/chart/helpers/transform';
-import { incomeCallback } from '../../helpers/transform';
+import { incomeCallback, transformDataToPreview } from '../../helpers/transform';
 import { AppState } from 'src/app/interfaces/appState.interface';
 import { Store, select } from '@ngrx/store';
 import { selector } from 'd3-selection';
@@ -27,12 +27,13 @@ export class ContainerComponent implements OnInit {
   protected isLoading$: Observable<boolean> = this.store.pipe(select(isLoadingSelector))
   protected data$: Observable<ChartData[]> = this.store.pipe(
     select(incomesSelector),
+    tap((data)=>this._data=data),
     map((val=>transformDataForChart(val,incomeCallback))),
   )
+  private _data!: IncomeData[]
 
-  constructor(private incomeDataService: IncomeDataService, private store: Store<IncomeState>){
-
-  }
+  constructor(private store: Store<IncomeState>) {}
+  
   ngOnInit(): void {
     // this.store
     this.store.dispatch(IncomesActions.getIncomes())
@@ -44,9 +45,9 @@ export class ContainerComponent implements OnInit {
       return;
     }
 
-    // this.previewComponent.data = 
-    // this.previewComponent.displayPreview(data) = 
-    const monthSummary = this.incomeDataService.getPreparedToPreview(month);
-    this.selectedMonth = monthSummary ? monthSummary : null
+    const data = transformDataToPreview(this._data);
+    const monthData = data.find((data)=> data.name === month);
+
+    this.selectedMonth = monthData ? monthData : null
   }
 }

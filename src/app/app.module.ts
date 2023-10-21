@@ -16,6 +16,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { CONFIG_CHART_TOKEN } from './tokens/config.token';
 import { BASIC_CHART_CONFIG } from './config';
+import { reducers } from './store/reducers';
+import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/selectors';
 
 
 
@@ -31,7 +34,10 @@ import { BASIC_CHART_CONFIG } from './config';
     BrowserAnimationsModule,
     DashboardModule,
     MaterialModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducers),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer
+    }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot()
   ],

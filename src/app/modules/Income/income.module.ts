@@ -10,8 +10,8 @@ import { reducers } from './store/reducers';
 import { IncomeDataService } from './services/income-data.service';
 import { EffectsModule } from '@ngrx/effects';
 import { IncomeEffects } from './store/effects';
+import { INCOME_MODULE_KEY } from './types/incomeData.types';
 
-const INCOME_MODULE_KEY = 'incomes';
 
 @NgModule({
   declarations: [

@@ -1,12 +1,12 @@
 
-import { createSelector } from "@ngrx/store";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AppState } from "src/app/interfaces/appState.interface";
-import { IncomeState } from "../types/incomeData.types";
+import { INCOME_MODULE_KEY, IncomeState } from "../types/incomeData.types";
 
-export const selectFeature = (state: IncomeState) => state;
+export const selectFeature = createFeatureSelector<IncomeState>(INCOME_MODULE_KEY);
 
-export const incomesSelector = createSelector(selectFeature, (state) => state.incomes);
+export const incomesSelector = createSelector(selectFeature, (state) => Object.keys(state.entities).map((month)=>state.entities[month]));
 
-export const errorSelector = createSelector(selectFeature, (state) => state.incomes );
+export const errorSelector = createSelector(selectFeature, (state) => state.error );
 
 export const isLoadingSelector = createSelector(selectFeature, (state) => state.isLoading );

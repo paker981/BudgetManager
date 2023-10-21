@@ -13,8 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './store/reducers';
 import { OutcomeEffects } from './store/effects';
 import { OutcomeDataService } from './services/outcome-data.service';
-
-const OUTCOME_MODULE_KEY = 'outcomes';
+import { OUTCOME_MODULE_KEY } from './types/outcome.types';
 
 @NgModule({
   declarations: [

@@ -42,7 +42,7 @@ export class ContainerComponent implements OnInit {
   
   constructor(
     private dialog: MatDialog,
-    private store: Store<AppState>
+    private store: Store<OutcomeState>
     ){}
 
   ngOnInit(): void {

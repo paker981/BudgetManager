@@ -3,7 +3,9 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import * as IncomesActions from '../store/actions';
 import { IncomeDataService } from "../services/income-data.service";
-import { catchError, map, mergeMap, of } from "rxjs";
+import { catchError, map, mergeMap, of, tap } from "rxjs";
+
+
 
 @Injectable()
 export class IncomeEffects {
@@ -14,7 +16,7 @@ export class IncomeEffects {
                 map((incomes)=>IncomesActions.getIncomesSuccess({incomes})),
                 catchError((error)=>of(IncomesActions.getIncomesError({error})))
             ))   
-        )
+        ),
     )
 
     constructor(
